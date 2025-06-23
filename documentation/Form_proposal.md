@@ -103,24 +103,24 @@ they can submit a correction. This feedback will be used to evaluate and potenti
 
 ### Timeline:
 
-| Date           | Milestone                                                                                       |
-| -------------- | ----------------------------------------------------------------------------------------------- |
+| Date           | Milestone                                                                            |
+| -------------- |--------------------------------------------------------------------------------------|
 | **2025-07-04** | Data analysis, feature selection, begin model training; design frontend layout and interactions |
-| **2025-07-11** | Complete model training and evaluation; draft main report structure                             |
-| **2025-07-17** | Finalize report and complete website deployment                                                 |
-| **2025-07-23** | Review the report; prepare final presentation slides and rehearsals                             |
+| **2025-07-11** | Complete model training and evaluation; draft main report structure; build frontend website |
+| **2025-07-17** | Finalize report and complete website deployment                                      |
+| **2025-07-23** | Review the report; prepare final presentation slides and rehearsals                  |
 
 ### Team Responsibilities:
 
-| Task                                                         | Members   |name|
-| ------------------------------------------------------------ |-----------|----|
-| Data analysis                                                | 2–3 members | |
-| Model training                                               | 2 members |-|
-| Report structure and review                                  | 2 members |-|
-| Final report writing                                         | 2 members |-|
-| Presentation slides                                          | 1–2 members |-|
-| Final presentation                                           | 2–3 members |-|
-| Website implementation, model deployment, project management | 1         |-|
+| Task                                                                         | Members     | name                                 |
+|------------------------------------------------------------------------------|-------------|--------------------------------------|
+| Data analysis                                                                | 2–3 members | Chaoran, Charina, Kai(Review)        |
+| Model training                                                               | 2 members   | Charina,Chaoran, Archana(Review)     |
+| Report structure and review                                                  | 2 members   | Chaoran, Archana(Review),Kai(Review) |
+| Final report writing                                                         | 2 members   | Archana,Chaoran(Review)              |
+| Presentation slides                                                          | 1–2 members | Kai,Charina                                 |
+| Final presentation                                                           | 2–3 members | Kai,Charina                          |
+| Website implementation, model deployment, progress management,explainable-ai | 1 member    | Kai                                  |
 
 
 
