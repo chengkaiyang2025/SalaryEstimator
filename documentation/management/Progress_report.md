@@ -37,7 +37,7 @@ Over the past few weeks, we have basically completed project topic selection, da
 
 During this process, we found that the most challenging aspects of data science projects are two points:
 
-1. The first is having a good idea. We had many ideas at the beginning of topic selection, but the salary prediction idea is relatively good - if we can make it into a website, most people might be willing to use it.
+1. The first is having a good idea for the project. We had many ideas at the beginning of topic selection, but the salary prediction idea is relatively good - if we can make it into a website, most people might be willing to use it.
 
 2. The second issue is data quality. We did not use salary datasets from Kaggle but directly used user survey data from Stack Overflow, because we believe survey data is more original and better reflects the complexity of real-world work data. However, there are also many invalid data in the dataset, and we spent considerable time on data cleaning.
 
