@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import joblib
 from feature_options import all_options
+from shap_util import analyze_model_with_shap, get_shap_insights
 
 # Page configuration
 st.set_page_config(
@@ -190,8 +191,66 @@ if st.button("🚀 Generate Salary Prediction", type="primary", use_container_wi
             with result_col1:
                 st.metric("Predicted Annual Salary", f"${actual_salary:,.0f}")
             
-            # with result_col2:
-            #     st.metric("Predicted Log Salary", f"{prediction:.4f}")
+            with result_col2:
+                st.metric("Experience Level", experience_level)
+            
+            # SHAP Analysis
+            st.markdown("---")
+            st.subheader("🔍 Feature Importance Analysis")
+            
+            # Get SHAP analysis
+            shap_results = analyze_model_with_shap(model, df)
+            
+            if shap_results['success']:
+                # Display insights in a user-friendly way
+                insights = get_shap_insights(shap_results, top_n=5)
+                
+                # Create columns for insights
+                if insights:
+                    insight_cols = st.columns(len(insights))
+                    
+                    for i, insight in enumerate(insights):
+                        with insight_cols[i]:
+                            if insight['type'] == 'positive':
+                                st.markdown("### 📈 Top Salary Boosters")
+                                for feature in insight['features']:
+                                    st.markdown(f"• **{feature['name']}**: +{feature['value']:.3f}")
+                            
+                            elif insight['type'] == 'negative':
+                                st.markdown("### 📉 Top Salary Reducers")
+                                for feature in insight['features']:
+                                    st.markdown(f"• **{feature['name']}**: {feature['value']:.3f}")
+                            
+                            elif insight['type'] == 'category':
+                                st.markdown("### 📊 Category Impact")
+                                for category in insight['categories']:
+                                    icon = "📈" if category['impact'] == 'positive' else "📉"
+                                    st.markdown(f"• **{category['category']}**: {icon} {category['contribution']:.3f}")
+                
+                # Show detailed breakdown in expander
+                with st.expander("📋 Detailed Feature Analysis"):
+                    # Top features table
+                    if shap_results['feature_importance']:
+                        top_features = shap_results['feature_importance'][:10]
+                        feature_data = {
+                            'Feature': [f[0] for f in top_features],
+                            'Impact': [f[1] for f in top_features],
+                            'Direction': ['📈' if f[1] > 0 else '📉' for f in top_features]
+                        }
+                        feature_df = pd.DataFrame(feature_data)
+                        st.dataframe(feature_df, use_container_width=True)
+                    
+                    # Summary metrics
+                    summary = shap_results['summary']
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.metric("Positive Contributions", f"{summary['positive_contributions']:.3f}")
+                    with col2:
+                        st.metric("Negative Contributions", f"{summary['negative_contributions']:.3f}")
+                    with col3:
+                        st.metric("Net Impact", f"{summary['positive_contributions'] + summary['negative_contributions']:.3f}")
+            else:
+                st.warning("Could not generate feature importance analysis.")
             
         except Exception as e:
             st.error(f"Prediction failed: {e}")
