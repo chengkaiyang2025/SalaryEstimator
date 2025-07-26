@@ -6,20 +6,22 @@
 @Kai 
 # Methodology and Evaluation (600 words)
 ## Well-defined approach to solve the problem 
-@Kai
+@Chaoran @Archana
 ## Accurate and precise evaluation of your solution 
 @Chaoran @Archana
-## Sufficient experiments to validate your results )
+## Sufficient experiments to validate your results
 @Chaoran @Archana
 # Results and discussion (750 words)
 ## Comparisons (op2mal solu2on, previous solu2ons, and/or your solu2on improvement)
-@Charina @Chaoran
+[ @Chaoran @Archana Copy from @Charina's slide]  
 ## Use graphs, charts, and/or tables to effectively display results
-@Charina @Chaoran
+[ @Chaoran @Archana Copy from @Charina's slide]  
 ## Justify the obtained results
-@Charina @Chaoran
+[ @Chaoran @Archana Copy from @Charina's slide]  
 ## Challenges faced and how did you overcome them
-@Charina @Kai
+@Charina
+
+
 # Conclusion and future work (150)
 @Kai
 # Proper cita2ons in your report (150 words)
