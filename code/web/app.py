@@ -37,7 +37,17 @@ st.subheader("📝 Your Information")
 # Initialize dictionaries
 user_input = {}
 selections = {}
-
+def map_experience_level(years):
+    if pd.isna(years):
+        return np.nan
+    elif years < 2:
+        return 'Beginner'
+    elif years < 5:
+        return 'Intermediate'
+    elif years < 10:
+        return 'Advanced'
+    else:
+        return 'Expert'
 # Basic Information Panel
 with st.expander("📊 Basic Information", expanded=True):
     col1, col2, col3 = st.columns(3)
@@ -78,11 +88,8 @@ with st.expander("💼 Work Details", expanded=True):
             all_options['EdLevel'],
             index=0
         )
-        selections['ExperienceLevel'] = st.selectbox(
-            "Experience Level",
-            all_options['ExperienceLevel'],
-            index=1
-        )
+        # ExperienceLevel will be calculated automatically based on YearsCodePro
+        # No need to show this in the UI
         selections['Employment'] = st.selectbox(
             "Employment Type",
             all_options['Employment'],
@@ -145,6 +152,9 @@ if st.button("🚀 Generate Salary Prediction", type="primary", use_container_wi
                 if key in df.columns:
                     df[key] = value
             
+            # Calculate ExperienceLevel based on YearsCodePro
+            experience_level = map_experience_level(user_input['YearsCodePro'])
+            
             # Fill one-hot encoded features
             for feature, selection in selections.items():
                 if feature == 'Languages':
@@ -158,6 +168,12 @@ if st.button("🚀 Generate Salary Prediction", type="primary", use_container_wi
                     col_name = f'{feature}_{selection}'
                     if col_name in df.columns:
                         df[col_name] = 1
+            
+            # Handle ExperienceLevel separately since it's calculated automatically
+            if experience_level is not None:
+                exp_col = f'ExperienceLevel_{experience_level}'
+                if exp_col in df.columns:
+                    df[exp_col] = 1
             
             # Make prediction
             prediction = model.predict(df)[0]
