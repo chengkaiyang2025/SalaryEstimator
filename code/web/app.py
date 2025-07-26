@@ -53,19 +53,24 @@ with st.expander("📊 Basic Information", expanded=True):
     col1, col2, col3 = st.columns(3)
     
     with col1:
+        user_input['EdLevel'] = st.selectbox(
+            "Education Level",
+            all_options['EdLevel'],
+            index=0
+        )
         user_input['YearsCodePro'] = st.number_input(
-            "Years of Professional Coding", 
-            min_value=0, max_value=50, value=5, step=1
+            "Years of Coding", 
+            min_value=0, max_value=50, value=4, step=1
         )
         user_input['Age'] = st.number_input(
             "Age", 
-            min_value=16, max_value=80, value=30, step=1
+            min_value=16, max_value=80, value=23, step=1
         )
     
     with col2:
         user_input['WorkExp'] = st.number_input(
             "Total Work Experience (Years)", 
-            min_value=0, max_value=50, value=7, step=1
+            min_value=0, max_value=50, value=2, step=1
         )
         user_input['GDP_per_capita'] = st.number_input(
             "GDP per capita (USD)", 
@@ -77,17 +82,14 @@ with st.expander("📊 Basic Information", expanded=True):
             "Cost of Living Index", 
             min_value=20, max_value=200, value=100, step=1
         )
+st.subheader("📝 The place you want to work")
 
 # Work Details Panel
 with st.expander("💼 Work Details", expanded=True):
     col1, col2 = st.columns(2)
     
     with col1:
-        selections['EdLevel'] = st.selectbox(
-            "Education Level",
-            all_options['EdLevel'],
-            index=0
-        )
+
         # ExperienceLevel will be calculated automatically based on YearsCodePro
         # No need to show this in the UI
         selections['Employment'] = st.selectbox(
@@ -98,7 +100,7 @@ with st.expander("💼 Work Details", expanded=True):
         selections['RemoteWork'] = st.selectbox(
             "Work Location",
             all_options['RemoteWork'],
-            index=1
+            index=0
         )
     
     with col2:
@@ -110,12 +112,12 @@ with st.expander("💼 Work Details", expanded=True):
         
         # Find default indices safely
         try:
-            us_index = all_options['Country'].index('United States')
+            us_index = all_options['Country'].index('Canada')
         except ValueError:
             us_index = 0
         
         try:
-            dev_index = all_options['DevType'].index('Developer, back-end')
+            dev_index = all_options['DevType'].index('Developer, full-stack')
         except ValueError:
             dev_index = 0
         
@@ -130,13 +132,14 @@ with st.expander("💼 Work Details", expanded=True):
             all_options['DevType'],
             index=dev_index
         )
+st.subheader("📝 Your tech stack")
 
 # Programming Languages Panel
 with st.expander("💻 Programming Languages", expanded=True):
     selections['Languages'] = st.multiselect(
         "Programming Languages You Work With",
         all_options['Languages'],
-        default=['Python', 'JavaScript']
+        default=['Python','JavaScript','Java','C#','SQL']
     )
 
 # Prediction button
