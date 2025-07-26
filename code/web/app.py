@@ -187,8 +187,8 @@ if st.button("🚀 Generate Salary Prediction", type="primary", use_container_wi
             with result_col1:
                 st.metric("Predicted Annual Salary", f"${actual_salary:,.0f}")
             
-            with result_col2:
-                st.metric("Predicted Log Salary", f"{prediction:.4f}")
+            # with result_col2:
+            #     st.metric("Predicted Log Salary", f"{prediction:.4f}")
             
         except Exception as e:
             st.error(f"Prediction failed: {e}")
