@@ -13,11 +13,11 @@
 @Chaoran @Archana
 # Results and discussion (750 words)
 ## Comparisons (op2mal solu2on, previous solu2ons, and/or your solu2on improvement)
-[ @Chaoran @Archana Copy from @Charina's slide]  
+[ @Chaoran @Archana Copy from @Charina's slide] and add more details   
 ## Use graphs, charts, and/or tables to effectively display results
-[ @Chaoran @Archana Copy from @Charina's slide]  
+[ @Chaoran @Archana Copy from @Charina's slide] and add more details     
 ## Justify the obtained results
-[ @Chaoran @Archana Copy from @Charina's slide]  
+[ @Chaoran @Archana Copy from @Charina's slide] and add more details     
 ## Challenges faced and how did you overcome them
 @Charina
 
