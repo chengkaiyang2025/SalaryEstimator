@@ -2,9 +2,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import json
 from feature_options import all_options
 from shap_util import analyze_model_with_shap, get_shap_insights
-
+import logging
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 # Page configuration
 st.set_page_config(
     page_title="Salary Predictor",
@@ -16,6 +19,13 @@ st.set_page_config(
 st.title("💰 Tech Salary Predictor")
 st.markdown("Enter your information below to get a salary prediction for tech professionals.")
 
+@st.cache_resource
+def load_country_data():
+    with open('D:\\GITHUB\\SalaryEstimator\\code\\web\\selected_country.json', 'r', encoding='utf-8') as f:
+        country_data = json.load(f)
+
+    country_map = {item['Country']: item for item in country_data}
+    return country_map
 # Load model
 @st.cache_resource
 def load_model():
@@ -27,7 +37,7 @@ def load_model():
         return None
 
 model = load_model()
-
+m = load_country_data()
 if model is None:
     st.error("Failed to load model. Please check if lr_model.pkl exists.")
     st.stop()
@@ -51,8 +61,7 @@ def map_experience_level(years):
         return 'Expert'
 # Basic Information Panel
 with st.expander("📊 Basic Information", expanded=True):
-    col1, col2, col3 = st.columns(3)
-    
+    col1, col2 = st.columns(2)
     with col1:
         user_input['EdLevel'] = st.selectbox(
             "Education Level",
@@ -63,41 +72,39 @@ with st.expander("📊 Basic Information", expanded=True):
             "Years of Coding", 
             min_value=0, max_value=50, value=4, step=1
         )
+
+    
+    with col2:
         user_input['Age'] = st.number_input(
             "Age", 
             min_value=16, max_value=80, value=23, step=1
         )
-    
-    with col2:
+
         user_input['WorkExp'] = st.number_input(
             "Total Work Experience (Years)", 
-            min_value=0, max_value=50, value=2, step=1
-        )
-        user_input['GDP_per_capita'] = st.number_input(
-            "GDP per capita (USD)", 
-            min_value=1000, max_value=200000, value=50000, step=1000
+            min_value=0, max_value=50, value=1, step=1
         )
     
-    with col3:
-        user_input['Cost_Index'] = st.number_input(
-            "Cost of Living Index", 
-            min_value=20, max_value=200, value=100, step=1
-        )
+
 st.subheader("📝 The place you want to work")
 
 # Work Details Panel
 with st.expander("💼 Work Details", expanded=True):
-    col1, col2 = st.columns(2)
+    col1, col2,col3 = st.columns(3)
     
     with col1:
+        user_input['Country'] = st.selectbox(
+            "Country",
+            all_options['Country'],
+            index=3
+        )
+        user_input['GDP_per_capita'] = m.get(user_input['Country']).get('GDP_per_capita', 0)
+        user_input['Cost_Index'] = m.get(user_input['Country']).get('Cost_Index', 0)
+        logging.info(f"Country: {user_input['Country']}, GDP per Capita: {user_input['GDP_per_capita']}, Cost Index: {user_input['Cost_Index']}")
 
         # ExperienceLevel will be calculated automatically based on YearsCodePro
         # No need to show this in the UI
-        selections['Employment'] = st.selectbox(
-            "Employment Type",
-            all_options['Employment'],
-            index=0
-        )
+
         selections['RemoteWork'] = st.selectbox(
             "Work Location",
             all_options['RemoteWork'],
@@ -110,7 +117,11 @@ with st.expander("💼 Work Details", expanded=True):
             all_options['OrgSize'],
             index=2
         )
-        
+        selections['Employment'] = st.selectbox(
+            "Employment Type",
+            all_options['Employment'],
+            index=0
+        )
         # Find default indices safely
         try:
             us_index = all_options['Country'].index('Canada')
@@ -122,12 +133,7 @@ with st.expander("💼 Work Details", expanded=True):
         except ValueError:
             dev_index = 0
         
-        selections['Country'] = st.selectbox(
-            "Country",
-            all_options['Country'],
-            index=us_index
-        )
-        
+    with col3:
         selections['DevType'] = st.selectbox(
             "Role/Position",
             all_options['DevType'],
