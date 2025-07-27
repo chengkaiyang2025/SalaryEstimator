@@ -6,3 +6,5 @@
 .idea/vcs.xml
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/inspectionProfiles/Project_Default.xml
+code/web/__pycache__/
+documentation/data
