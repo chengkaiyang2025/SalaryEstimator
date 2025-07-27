@@ -63,26 +63,26 @@ def map_experience_level(years):
 with st.expander("📊 Basic Information", expanded=True):
     col1, col2 = st.columns(2)
     with col1:
-        user_input['EdLevel'] = st.selectbox(
+        selections['EdLevel'] = st.selectbox(
             "Education Level",
             all_options['EdLevel'],
             index=0
         )
         user_input['YearsCodePro'] = st.number_input(
             "Years of Coding", 
-            min_value=0, max_value=50, value=4, step=1
+            min_value=0, max_value=50, value=10, step=1
         )
 
     
     with col2:
         user_input['Age'] = st.number_input(
             "Age", 
-            min_value=16, max_value=80, value=23, step=1
+            min_value=16, max_value=80, value=30, step=1
         )
 
         user_input['WorkExp'] = st.number_input(
             "Total Work Experience (Years)", 
-            min_value=0, max_value=50, value=1, step=1
+            min_value=0, max_value=50, value=7, step=1
         )
     
 
@@ -93,14 +93,14 @@ with st.expander("💼 Work Details", expanded=True):
     col1, col2,col3 = st.columns(3)
     
     with col1:
-        user_input['Country'] = st.selectbox(
+        selections['Country'] = st.selectbox(
             "Country",
             all_options['Country'],
             index=3
         )
-        user_input['GDP_per_capita'] = m.get(user_input['Country']).get('GDP_per_capita', 0)
-        user_input['Cost_Index'] = m.get(user_input['Country']).get('Cost_Index', 0)
-        logging.info(f"Country: {user_input['Country']}, GDP per Capita: {user_input['GDP_per_capita']}, Cost Index: {user_input['Cost_Index']}")
+        user_input['GDP_per_capita'] = m.get(selections['Country']).get('GDP_per_capita', 0)
+        user_input['Cost_Index'] = m.get(selections['Country']).get('Cost_Index', 0)
+        logging.info(f"Country: {selections['Country']}, GDP per Capita: {user_input['GDP_per_capita']}, Cost Index: {user_input['Cost_Index']}")
 
         # ExperienceLevel will be calculated automatically based on YearsCodePro
         # No need to show this in the UI
@@ -108,7 +108,7 @@ with st.expander("💼 Work Details", expanded=True):
         selections['RemoteWork'] = st.selectbox(
             "Work Location",
             all_options['RemoteWork'],
-            index=0
+            index=1
         )
     
     with col2:
@@ -123,10 +123,10 @@ with st.expander("💼 Work Details", expanded=True):
             index=0
         )
         # Find default indices safely
-        try:
-            us_index = all_options['Country'].index('Canada')
-        except ValueError:
-            us_index = 0
+        # try:
+        #     selections = all_options['Country'].index('Canada')
+        # except ValueError:
+        #     selections = 0
         
         try:
             dev_index = all_options['DevType'].index('Developer, full-stack')
@@ -146,7 +146,11 @@ with st.expander("💻 Programming Languages", expanded=True):
     selections['Languages'] = st.multiselect(
         "Programming Languages You Work With",
         all_options['Languages'],
-        default=['Python','JavaScript','Java','C#','SQL']
+        default=['Python','JavaScript',
+                 'TypeScript','HTML/CSS',
+                 'Java','C#','SQL', 
+                 'Go'
+                 ]
     )
 
 # Prediction button
@@ -161,7 +165,7 @@ if st.button("🚀 Generate Salary Prediction", type="primary", use_container_wi
             for key, value in user_input.items():
                 if key in df.columns:
                     df[key] = value
-            
+            logging.info(f"User input: {user_input}")
             # Calculate ExperienceLevel based on YearsCodePro
             experience_level = map_experience_level(user_input['YearsCodePro'])
             
@@ -195,10 +199,11 @@ if st.button("🚀 Generate Salary Prediction", type="primary", use_container_wi
             result_col1, result_col2 = st.columns(2)
             
             with result_col1:
-                st.metric("Predicted Annual Salary", f"${actual_salary:,.0f}")
-            
+                st.metric("Predicted Annual Salary(CAD)", f"${actual_salary*1.37:,.0f}")
+                st.metric("Predicted Annual Salary(USD)", f"${actual_salary:,.0f}")
+
             with result_col2:
-                st.metric("Experience Level", experience_level)
+               st.metric("Experience Level", experience_level)
             
             # SHAP Analysis
             st.markdown("---")
