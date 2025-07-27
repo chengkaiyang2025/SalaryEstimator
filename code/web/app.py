@@ -18,10 +18,11 @@ st.set_page_config(
 # Title and description
 st.title("💰 Tech Salary Predictor")
 st.markdown("Enter your information below to get a salary prediction for tech professionals.")
-
+import os
+abs = os.path.dirname(os.path.abspath(__file__))
 @st.cache_resource
 def load_country_data():
-    with open('D:\\GITHUB\\SalaryEstimator\\code\\web\\selected_country.json', 'r', encoding='utf-8') as f:
+    with open(os.path.join(abs,'selected_country.json'), 'r', encoding='utf-8') as f:
         country_data = json.load(f)
 
     country_map = {item['Country']: item for item in country_data}
@@ -30,7 +31,7 @@ def load_country_data():
 @st.cache_resource
 def load_model():
     try:
-        model = joblib.load('D:\GITHUB\SalaryEstimator\code\web\lr_model.pkl')
+        model = joblib.load(os.path.join(abs,'lr_model.pkl'))
         return model
     except Exception as e:
         st.error(f"Error loading model: {e}")

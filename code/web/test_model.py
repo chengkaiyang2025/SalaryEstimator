@@ -1,11 +1,13 @@
 import joblib
+import os
 import pandas as pd
 import numpy as np
 from feature_options import all_options
 from shap_util import analyze_model_with_shap, print_shap_analysis
 
 # Load model
-model = joblib.load('D:\GITHUB\SalaryEstimator\code\web\lr_model.pkl')
+model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lr_model.pkl')
+model = joblib.load(model_path)
 
 def map_experience_level(years):
     if pd.isna(years):
