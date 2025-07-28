@@ -31,7 +31,7 @@ def load_country_data():
 @st.cache_resource
 def load_model():
     try:
-        model = joblib.load(os.path.join(abs,'lr_model.pkl'))
+        model = joblib.load(os.path.join(abs,'lr_model_v2.pkl'))
         return model
     except Exception as e:
         st.error(f"Error loading model: {e}")
