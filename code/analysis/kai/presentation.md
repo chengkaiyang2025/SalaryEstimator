@@ -9,7 +9,6 @@ They might have questions like:
 
 - If I want to be a full-stack developer or data analyst, how does salary change in different cities or with different skills?
 
-
 ---
 We developed an online webpage that allows users to predict their salary based on their personal information, 
 such as education level, years of experience, and work location.
@@ -18,12 +17,10 @@ Now I’d like to show you our demo website.
 
 This is an online salary prediction tool we built for students.
 
-
 Let’s try an example.
 
 Suppose I’m a student with a Bachelor’s degree, 1 year of experience, and I want to work in Vancouver as a full-stack developer.
 I’ll also choose some common skills like Python and JavaScript.
-
 
 Once I click "Submit", the model gives me a predicted salary based on real-world data 
 
@@ -34,37 +31,22 @@ and even simulate “what-if” scenarios —
 
 for example, as an internation student, if I go back to China , what salary I will get ? 
 
-
 about one hundred and 21 K one year
-
----
-
-当然可以，下面是更简洁、口语化的版本，适合演讲时自然讲解：
-
----
 
 Let me walk you through our project workflow.
 We split it into three parts:
 
-
-
 **First**, we started with only one dataset We did data cleaning and analysis in Google Colab
  just to understand what features might be useful, and also remove outliers or missing values.
 
-
 **Second**, we selected key features like working experience, education level, and job location.
-
 At the same time,we can start build the web application, those features will be user input.
-
-
-
 
 **Third**, 
 Then we trained different models — like decision tree or linear regression, and we choose one of our models,
 and export it as  a `.pkl` file.
 
 And we can use these pkl file to predict online.
-
 
 This whole process is repeatable.
 If we get more data or find better model settings, we always update the website with the new model step by step.
